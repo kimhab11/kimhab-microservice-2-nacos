@@ -1,0 +1,21 @@
+server:
+  port: 1111
+spring:
+
+#  profiles:
+#    active: dev
+  application:
+    name: gateway-service
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+    config:
+  #  import: application-dev.yaml
+      import: optional:nacos
+#        prefix: gateway-service
+#      discovery:
+#        server-addr: 127.0.0.1:8847
+#  config:
+#    activate:
+#      on-profile: "dev"

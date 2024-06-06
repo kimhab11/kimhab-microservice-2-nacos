@@ -1,0 +1,13 @@
+-- create table student
+-- (
+--     serial4 id primary,
+--     varchar name,
+--     integer age,
+--     varchar id_card;
+-- )
+--
+-- create table class
+-- (
+--     serial4 id primary,
+--     varchar class_name;
+-- )
