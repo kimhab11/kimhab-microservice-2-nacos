@@ -1,9 +1,0 @@
-spring:
-  application:
-    name: cloud-app
-  cloud:
-    nacos:
-      config:
-        server-addr: http://localhost:8847
-server:
-  port: 8884
