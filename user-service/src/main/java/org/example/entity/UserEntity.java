@@ -25,6 +25,7 @@ public class UserEntity {
     private String password;
 
     private LocalDateTime updatedAt;
+  //  private LocalDateTime createdAt;
 
     private String email;
 

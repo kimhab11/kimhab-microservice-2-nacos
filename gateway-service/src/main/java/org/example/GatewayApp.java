@@ -10,7 +10,7 @@ import javax.annotation.PostConstruct;
 @SpringBootApplication
 @EnableDiscoveryClient
 public class GatewayApp {
-    @Value("${gw.test}")
+    @Value("${spring.application.name}")
     String test;
     public static void main(String[] args) {
         SpringApplication.run(GatewayApp.class , args);

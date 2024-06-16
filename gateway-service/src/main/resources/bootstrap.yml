@@ -2,6 +2,14 @@ spring:
   profiles:
     active: dev
   cloud:
+    gateway: # config the routes for gateway
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/user-service/**
+          filters:
+            - StripPrefix=1
     nacos:
       config:
         username: nacos

@@ -26,10 +26,11 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>gateway-service</module>
-        <module>spring-cloud-app-nacos</module>
-        <module>spring-boot-app-nacos</module>
-        <module>spring-app-nacos</module>
+        <!--        <module>spring-cloud-app-nacos</module>-->
+        <!--        <module>spring-boot-app-nacos</module>-->
+        <!--        <module>spring-app-nacos</module>-->
         <module>user-service</module>
+        <module>catalog-service</module>
     </modules>
 
 
@@ -62,22 +63,19 @@
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
                 <version>2021.0.1.0</version>
-<!--                <version>2022.0.0.0-RC1</version>-->
+                <!--                <version>2022.0.0.0-RC1</version>-->
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
-    <!--    <dependencies>-->
-    <!--        <dependency>-->
-    <!--            <groupId>com.alibaba.cloud</groupId>-->
-    <!--            <artifactId>spring-cloud-alibaba-dependencies</artifactId>-->
-    <!--            <version>2022.0.0.0-RC1</version>-->
-    <!--            <type>pom</type>-->
-    <!--            <scope>import</scope>-->
-    <!--        </dependency>-->
-    <!--    </dependencies>-->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+    </dependencies>
 
 
     <!-- <pluginManagement> define common configurations for plugins that are used in multiple modules
@@ -121,6 +119,11 @@
                             <groupId>org.springframework.boot</groupId>
                             <artifactId>spring-boot-configuration-processor</artifactId>
                             <version>${spring-boot.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.28</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>

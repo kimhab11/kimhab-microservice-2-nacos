@@ -2,7 +2,9 @@ spring:
   application:
     name: user-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/spring_ms_2
+    url: jdbc:postgresql://localhost:5432/spring_ms_2?currentSchema=user-service
+    hikari:
+      schema: user-service
     username: postgres
     password: 123
   jpa:
@@ -12,8 +14,8 @@ spring:
       ddl-auto: update
 jwt-data:
   jwtSecret: kimhab
-  accessExpirationMn: 840
-  refreshExpirationMn: 850
+  accessExpirationMn: 840000
+  refreshExpirationMn: 850000
 
 server:
   port: 1112
