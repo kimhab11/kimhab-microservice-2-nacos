@@ -1,6 +1,7 @@
 package org.example.entity;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -17,6 +18,7 @@ public class CategoryEntity {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "categories")
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
     private Set<BookEntity> books = new HashSet<>();
 }

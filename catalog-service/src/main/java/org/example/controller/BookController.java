@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("book")
@@ -23,5 +20,11 @@ public class BookController {
     public ResponseEntity<?> addBook(@RequestBody BookEntity book){
         bookRepository.save(book);
         return new ResponseEntity<>(book,HttpStatus.CREATED);
+    }
+
+    @GetMapping("list-all")
+    public ResponseEntity<?> listAll(){
+        var books = bookRepository.findAll();
+        return ResponseEntity.ok(books);
     }
 }

@@ -1,8 +1,8 @@
 server:
-  port: 1113
+  port: 1114
 spring:
   application:
-    name: catalog-service
+    name: order-service
   cloud:
     nacos:
       config:
@@ -17,9 +17,9 @@ spring:
             refresh: true
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/spring_ms_2?currentSchema=catalog-service
+    url: jdbc:postgresql://localhost:5432/spring_ms_2?currentSchema=order-service
     hikari:
-      schema: catalog-service
+      schema: order-service
     username: postgres
     password: 123
   jpa:

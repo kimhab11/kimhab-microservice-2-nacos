@@ -3,6 +3,9 @@ spring:
     active: dev
   cloud:
     gateway: # config the routes for gateway
+      discovery:
+        locator:
+          enabled: true
       routes:
         - id: user-service
           uri: lb://user-service
@@ -10,6 +13,12 @@ spring:
             - Path=/user-service/**
           filters:
             - StripPrefix=1
+        - id: catalog-service
+          uri: lb://catalog-service
+          predicates:
+              - Path=/catalog-service/**
+          filters:
+              - StripPrefix=1
     nacos:
       config:
         username: nacos

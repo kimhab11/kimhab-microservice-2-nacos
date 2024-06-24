@@ -1,6 +1,9 @@
 package org.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -28,7 +31,10 @@ public class BookEntity {
     private BigDecimal price;
 
 
-    @ManyToMany
+ //   @ToString.Exclude
+    @JsonIgnore
+ //   @JsonManagedReference
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "book_authors",
             joinColumns = @JoinColumn(name = "book_id"),
@@ -36,7 +42,9 @@ public class BookEntity {
     )
     private Set<AuthorEntity> authors = new HashSet<>();
 
-    @ManyToMany
+    @ToString.Exclude
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "book_categories",
             joinColumns = @JoinColumn(name = "book_id"),
