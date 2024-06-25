@@ -1,16 +1,20 @@
 package org.example.controller;
 
+import lombok.extern.slf4j.Slf4j;
+import org.example.dto.BookResponse;
 import org.example.entity.BookEntity;
 import org.example.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("book")
+@Slf4j
 public class BookController {
 
     @Autowired
@@ -25,6 +29,12 @@ public class BookController {
     @GetMapping("list-all")
     public ResponseEntity<?> listAll(){
         var books = bookRepository.findAll();
-        return ResponseEntity.ok(books);
+        log.info("books: {}", books.size());
+
+        List<BookResponse> bookResponseSet = new ArrayList<>();
+        books.forEach(book -> bookResponseSet.add(new BookResponse(book)));
+        log.info("bookResponseSet: {}",  bookResponseSet.size());
+
+        return ResponseEntity.ok(bookResponseSet);
     }
 }

@@ -13,12 +13,20 @@ spring:
             - Path=/user-service/**
           filters:
             - StripPrefix=1
+
         - id: catalog-service
           uri: lb://catalog-service
           predicates:
               - Path=/catalog-service/**
           filters:
               - StripPrefix=1
+
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/order/**
+          filters:
+            - StripPrefix=0
     nacos:
       config:
         username: nacos

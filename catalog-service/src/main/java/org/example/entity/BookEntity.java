@@ -3,6 +3,8 @@ package org.example.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -13,7 +15,8 @@ import java.util.Set;
 
 @Table(name = "books")
 @Entity
-@Data
+@Getter
+@Setter
 public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,8 +34,8 @@ public class BookEntity {
     private BigDecimal price;
 
 
- //   @ToString.Exclude
-    @JsonIgnore
+//    @ToString.Exclude
+//    @JsonIgnore
  //   @JsonManagedReference
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -42,8 +45,8 @@ public class BookEntity {
     )
     private Set<AuthorEntity> authors = new HashSet<>();
 
-    @ToString.Exclude
-    @JsonIgnore
+//    @ToString.Exclude
+//    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "book_categories",

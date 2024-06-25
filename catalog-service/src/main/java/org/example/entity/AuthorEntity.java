@@ -1,17 +1,18 @@
 package org.example.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.awt.print.Book;
 import java.util.HashSet;
 import java.util.Set;
 
 @Table(name = "authors")
 @Entity
-@Data
+@Getter
+@Setter
 public class AuthorEntity {
 
     @Id
@@ -22,7 +23,8 @@ public class AuthorEntity {
     private String name;
 
 
-  //  @ToString.Exclude
+    @ToString.Exclude
+    @JsonIgnore
 //  @JsonBackReference
     @ManyToMany(mappedBy = "authors", fetch = FetchType.LAZY)
     private Set<BookEntity> books = new HashSet<>();

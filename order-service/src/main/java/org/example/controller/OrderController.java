@@ -24,10 +24,8 @@ public class OrderController {
 
     @Autowired
     private OrderRepository orderRepository;
-
     @Autowired
     private OrderItemRepository orderItemRepository;
-
 
     @PostMapping("create")
     public ResponseEntity<?> createOrder(@Validated @RequestBody CreateOrderItemRequest orderItemRequest){
