@@ -4,15 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.entity.OrderEntity;
 import org.example.entity.OrderItemEntity;
 import org.example.model.CreateOrderItemRequest;
+import org.example.model.OrderResponse;
 import org.example.repository.OrderItemRepository;
 import org.example.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,5 +45,15 @@ public class OrderController {
 
         return ResponseEntity.ok("create order");
 
+    }
+
+    @GetMapping("list-all")
+    public ResponseEntity<?> listAll(){
+        var orderEntityList = orderRepository.findAll();
+        log.info("orderEntityList: {}", orderEntityList.size());
+
+        List<OrderResponse> orderResponseList = new ArrayList<>();
+        orderEntityList.forEach(orderEntity -> orderResponseList.add(new OrderResponse(orderEntity)));
+        return ResponseEntity.ok(orderResponseList);
     }
 }
