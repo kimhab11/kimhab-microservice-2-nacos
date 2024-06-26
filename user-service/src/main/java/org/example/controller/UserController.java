@@ -9,7 +9,6 @@ import org.example.model.UserLoginRequest;
 import org.example.model.UserLoginResponse;
 import org.example.model.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -22,15 +21,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("user/auth")
 @Slf4j
 public class UserController {
-
-    @Value("${test.data}")
-    private String test;
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -75,7 +70,6 @@ public class UserController {
     @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody @Valid UserLoginRequest loginRequest){
 
-        System.out.println(test);
         log.info("loginRequest: {}", loginRequest);
         Authentication authentication = null;
         try {

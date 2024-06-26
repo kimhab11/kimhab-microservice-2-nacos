@@ -37,4 +37,14 @@ public class BookController {
 
         return ResponseEntity.ok(bookResponseSet);
     }
+
+    @GetMapping("{id}")
+    public ResponseEntity<?> getBookById(@PathVariable long id){
+        var book = bookRepository.findById(id).orElseThrow(()->new RuntimeException("not found"));
+        var bookRes = new BookResponse(book);
+        log.info("book: {}", bookRes);
+
+        return ResponseEntity.ok(bookRes);
+    }
+
 }

@@ -17,8 +17,8 @@ public class CreateOrderItemRequest {
         private Long bookId;
         @NotEmpty
         private Long quantity;
-        @NotEmpty
-        private float price;
+//        @NotEmpty
+//        private float price;
     }
 }
 

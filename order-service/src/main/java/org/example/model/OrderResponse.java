@@ -12,15 +12,21 @@ public class OrderResponse {
     private long userId;
     private String status;
 
+    private String orderDate;
+
     private List<OrderItemResponse> orderItemResponses = new ArrayList<>();
+
+    private float subTotal;
 
     public OrderResponse(OrderEntity orderEntity){
         id = orderEntity.getId();
         userId = orderEntity.getUserId();
         status = orderEntity.getStatus();
+        orderDate = String.valueOf(orderEntity.getOrderDate());
 
         orderEntity.getOrderItems().forEach(orderItemEntity -> {
             orderItemResponses.add(new OrderItemResponse(orderItemEntity));
+            subTotal += orderItemEntity.getTotalPrice();
         });
 
     }
