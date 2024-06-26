@@ -16,6 +16,7 @@ spring:
           - data-id: nacos-register.yml
             refresh: true
           - data-id: feign-client.yml
+            refresh: true
 
 
   datasource:
@@ -36,20 +37,35 @@ logging:
   level:
     root: info
 
-resilience4j:
-  circuitbreaker:
-    instances:
-      userService:
-        registerHealthIndicator: true
-        slidingWindowSize: 5
-        minimumNumberOfCalls: 5
-        permittedNumberOfCallsInHalfOpenState: 3
-        waitDurationInOpenState: 10000
-        failureRateThreshold: 50
-        eventConsumerBufferSize: 10
-        recordExceptions:
-          - java.io.IOException
-          - java.util.concurrent.TimeoutException
-#        ignoreExceptions:
-#          - com.example.exception.IgnoredException
+#resilience4j:
+#  circuitbreaker:
+#    instances:
+#      catalogService:
+#        registerHealthIndicator: true
+#        slidingWindowSize: 5
+#        minimumNumberOfCalls: 5
+#        permittedNumberOfCallsInHalfOpenState: 3
+#        waitDurationInOpenState: 10000
+#        failureRateThreshold: 50
+#        eventConsumerBufferSize: 10
+#        recordExceptions:
+#          - java.io.IOException
+#          - java.util.concurrent.TimeoutException
+#  retry:
+#    instances:
+#      catalogService:
+#        max-attempts: 2
+#        wait-duration: 3s
+#  ratelimiter:
+#    instances:
+#      catalogService:
+#        limitForPeriod: 10
+#  bulkhead:
+#    instances:
+#      catalogService:
+#        maxConcurrentCalls: 10
 
+
+feign:
+  circuitbreaker:
+    enabled: true

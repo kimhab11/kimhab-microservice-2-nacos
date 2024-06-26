@@ -12,12 +12,12 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookResponse {
+public class BookResponseDTO {
     private Long id;
     private String title;
     private String description;
     private LocalDate publishedDate;
     private BigDecimal price;
-    private List<AuthorResponse> authorResponses = new ArrayList<>();
-    private List<CategoryResponse> categoryResponses = new ArrayList<>();
+    private List<AuthorResponseDTO> authorResponses = new ArrayList<>();
+    private List<CategoryResponseDTO> categoryResponses = new ArrayList<>();
 }

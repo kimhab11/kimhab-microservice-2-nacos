@@ -1,10 +1,11 @@
 package org.example.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.IBook;
+import org.example.feign.IBook;
 import org.example.model.CreateOrderItemRequest;
 import org.example.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +16,6 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
     @Autowired
     private OrderService orderService;
-
-    @Autowired
-    private IBook iBook;
 
     @PostMapping("create")
     public ResponseEntity<?> createOrder(@Validated @RequestBody CreateOrderItemRequest orderItemRequest){
