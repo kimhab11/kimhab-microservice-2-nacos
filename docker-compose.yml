@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  gateway-service:
+    image: ms-2-nacos/gateway-service:1.0-SNAPSHOT
+    container_name: gateway-service
+    restart: on-failure
+    ports:
+      - "1111:1111"
+  catalog-service:
+    image: ms-2-nacos/catalog-service:1.0-SNAPSHOT
+    container_name: catalog-service
+    ports:
+      - "2223:1113"
+    environment:
+      - DB_HOST=host.docker.internal
+networks:
+  default:
+    name:  ms2-nacos

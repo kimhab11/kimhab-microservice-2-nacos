@@ -32,44 +32,64 @@ public class OrderService {
     private IBook iBook;
 
     @Transactional
-    public void createOrder(CreateOrderItemRequest orderItemRequest){
-
+    public void createOrder(CreateOrderItemRequest orderItemRequest) {
         OrderEntity order = new OrderEntity();
         order.setUserId(orderItemRequest.getUserId());
         order.setStatus("N");
-        var orderEntity = orderRepository.save(order);
-        log.info("orderEntity: {}", orderEntity);
 
-        orderItemRequest.getBooks().forEach(r ->{
-            OrderItemEntity orderItemEntity = new OrderItemEntity();
-            orderItemEntity.setOrder(orderEntity);
+        // Prepare a list to hold valid OrderItemEntity objects
+        List<OrderItemEntity> orderItems = new ArrayList<>();
 
-            // find book
+        // Flag to check if all books are valid
+        boolean allBooksValid = true;
+
+        for (var r : orderItemRequest.getBooks()) {
+            // Find book
             var book = iBook.getBookById(r.getBookId());
-            if (book == null) throw new RuntimeException("book null");
+            if (book == null) {
+                allBooksValid = false;
+                break;
+            }
+
+            OrderItemEntity orderItemEntity = new OrderItemEntity();
+            orderItemEntity.setOrder(order);
             orderItemEntity.setBookId(book.getId());
             orderItemEntity.setTotalPrice(r.getQuantity() * book.getPrice().floatValue());
             orderItemEntity.setQuantity(Math.toIntExact(r.getQuantity()));
 
-            orderItemRepository.save(orderItemEntity);
-            log.info("orderItemEntity: {}", orderItemEntity);
-        });
+            // Add to the list of valid order items
+            orderItems.add(orderItemEntity);
+        }
+
+        if (allBooksValid) {
+            var orderEntity = orderRepository.save(order);
+            log.info("orderEntity: {}", orderEntity);
+
+            // Save all valid order items
+            orderItems.forEach(orderItemEntity -> {
+                orderItemEntity.setOrder(orderEntity); // Set the persisted order entity
+                orderItemRepository.save(orderItemEntity);
+                log.info("orderItemEntity: {}", orderItemEntity);
+            });
+        } else {
+            throw new RuntimeException("One or more books are null");
+        }
     }
 
 
-//    @CircuitBreaker(name = "catalogService")
+    //    @CircuitBreaker(name = "catalogService")
 //    @Retry(name = "catalogService")
 //    @RateLimiter(name = "catalogService")
 //    @Bulkhead(name = "catalogService")
     public OrderResponse getOrderById(long id) {
-        var order = orderRepository.findById(id).orElseThrow(()-> new RuntimeException("not found"));
+        var order = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("not found"));
         var orderRes = new OrderResponse(order);
         orderRes.getOrderItemResponses().forEach(orderItemResponse -> {
             // find book
             var book = iBook.getBookById(orderItemResponse.getBookId());
             orderItemResponse.setBookResponseDTO(book);
         });
-        log.info("orderRes: {}" , orderRes);
+        log.info("orderRes: {}", orderRes);
 
         return orderRes;
     }
@@ -80,7 +100,7 @@ public class OrderService {
 
         List<OrderResponse> orderResponseList = new ArrayList<>();
         orderEntityList.forEach(orderEntity -> {
-            var orderRes= new OrderResponse(orderEntity);
+            var orderRes = new OrderResponse(orderEntity);
             orderRes.getOrderItemResponses().forEach(orderItemResponse -> {
                 // find book
                 var book = iBook.getBookById(orderItemResponse.getBookId());

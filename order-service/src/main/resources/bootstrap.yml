@@ -69,3 +69,5 @@ logging:
 feign:
   circuitbreaker:
     enabled: true
+  hystrix: # enables Hystrix
+    enabled: true
